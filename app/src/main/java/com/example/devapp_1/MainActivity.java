@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 if (Jéuner) {
                     if (age >= 13 && (valeurM >= 5.0 && valeurM <= 7.2)) {
                         res.setText("niveau de glycémie est normale 1");
-                    } else if (age >= 6 && (valeurM >= 5.0 && valeurM <= 10.0)) {
+                    } else if ((age < 13 && age >= 6) && (valeurM >= 5.0 && valeurM <= 10.0)) {
                         res.setText("niveau de glycémie est normale 2");
-                    } else if (valeurM >= 5.5 && valeurM <= 10.0) {
+                    } else if ((age < 13 && age >= 6) && (valeurM >= 5.5 && valeurM <= 10.0)) {
                         res.setText("niveau de glycémie est normale 3");
                     } else {
                         res.setText("niveau de glycémie est trop bas  ou niveau de glycémie est trop élevée 1");
@@ -90,12 +90,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 vm.setText("");
                 sbAge.setProgress(0);
-                openactivity2();
 
-            }
-            public void openactivity2(){
-                Intent intent = new Intent(MainActivity.this,activity.class);
+
+                // Create an Intent to start the Const_Activity
+                Intent intent = new Intent(MainActivity.this, Consultation_Activity.class);
+
+                // Pass the 'res' value to Const_Activity
+                intent.putExtra("result", res.getText().toString());
+
+                // Start the Const_Activity
                 startActivity(intent);
+
             }
         });
     }
