@@ -14,32 +14,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText vm;
-    private SeekBar sbAge;
-    private TextView res;
-    private Button btn;
-    private RadioGroup rbGrp;
-    private TextView votreAge;
-    private boolean Jéuner = true;
+    private TextView age = null, res = null;
+    private SeekBar sbage = null;
+    private RadioGroup rbGrp = null;
+    private RadioButton rboui = null, rbnon = null;
+    private EditText vm = null;
+    private Button btn = null;
+    private boolean jeuner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
 
-        votreAge = findViewById(R.id.votreAge);
-        vm = findViewById(R.id.vm);
-        sbAge = findViewById(R.id.sbAge);
-        res = findViewById(R.id.res);
-        rbGrp = findViewById(R.id.rbGrp);
-        btn = findViewById(R.id.btn);
-
-        sbAge.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        sbage.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // Update the TextView with the current progress value
-                votreAge.setText("Votre Age: " + progress);
+                // Mettre à jour le TextView avec la valeur actuelle du progrès
+                age.setText("Votre Age: " + progress);
             }
 
             @Override
@@ -48,60 +42,96 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MainActivity.this, "Stop Tracking Touch", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        rbGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton selectedRadioButton = findViewById(checkedId);
-                String selectedValue = selectedRadioButton.getText().toString();
-                if (selectedValue.equals("Oui")) {
-                    Jéuner=true;
-                }else {
-                    Jéuner=false;
-                }
+                Toast.makeText(MainActivity.this, "Arrêt du suivi tactile", Toast.LENGTH_SHORT).show();
             }
         });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                int age = sbAge.getProgress();
-                double valeurM = Double.parseDouble(vm.getText().toString());
+            public void onClick(View v) {
 
-                if (Jéuner) {
-                    if (age >= 13 && (valeurM >= 5.0 && valeurM <= 7.2)) {
-                        res.setText("niveau de glycémie est normale 1");
-                    } else if ((age < 13 && age >= 6) && (valeurM >= 5.0 && valeurM <= 10.0)) {
-                        res.setText("niveau de glycémie est normale 2");
-                    } else if ((age < 13 && age >= 6) && (valeurM >= 5.5 && valeurM <= 10.0)) {
-                        res.setText("niveau de glycémie est normale 3");
-                    } else {
-                        res.setText("niveau de glycémie est trop bas  ou niveau de glycémie est trop élevée 1");
-                    }
+                int ageValue;
+                double vmValue;
+                boolean validAge = false, validVm = false;
+
+                if (sbage.getProgress() != 0) {
+                    validAge = true;
                 } else {
-                    if (age >= 13 && valeurM < 10.5) {
-                        res.setText("niveau de glycémie est normale");
+                    Toast.makeText(MainActivity.this, "Veuillez vérifier votre âge", Toast.LENGTH_SHORT).show();
+                }
+
+                if (!vm.getText().toString().isEmpty()) {
+                    validVm = true;
+                } else {
+                    Toast.makeText(MainActivity.this, "Veuillez vérifier votre valeur mesurée", Toast.LENGTH_LONG).show();
+                }
+
+                if (validAge && validVm) {
+                    ageValue = sbage.getProgress();
+                    vmValue = Double.valueOf(vm.getText().toString());
+
+                    if (rboui.isChecked()) {
+                        if (ageValue >= 13) {
+                            if (vmValue < 5.0) {
+                                res.setText("Niveau de glycémie est bas");
+                            } else if (vmValue >= 5.0 && vmValue <= 7.2) {
+                                res.setText("Niveau de glycémie est normal");
+                            } else {
+                                res.setText("Niveau de glycémie est trop élevé");
+                            }
+                        } else if (ageValue >= 6 && ageValue <= 12) {
+                            if (vmValue < 5.0) {
+                                res.setText("Niveau de glycémie est trop bas");
+                            } else if (vmValue >= 5.0 && vmValue <= 10.0) {
+                                res.setText("Niveau de glycémie est normal");
+                            } else {
+                                res.setText("Niveau de glycémie est trop élevé");
+                            }
+                        } else {
+                            if (vmValue < 5.5) {
+                                res.setText("Niveau de glycémie est trop bas");
+                            } else if (vmValue >= 5.5 && vmValue <= 10.0) {
+                                res.setText("Niveau de glycémie est normal");
+                            } else {
+                                res.setText("Niveau de glycémie est trop élevé");
+                            }
+                        }
+                    } else if (vmValue < 10.5) {
+                        res.setText("Niveau de glycémie est normal");
+
                     } else {
-                        res.setText("niveau de glycémie est trop bas  ou niveau de glycémie est trop élevée 2 ");
+                        res.setText("Niveau de glycémie est élevé");
+
                     }
                 }
+
+                // Effacer les champs après le traitement
                 vm.setText("");
-                sbAge.setProgress(0);
-
-
-                // Create an Intent to start the Const_Activity
-                Intent intent = new Intent(MainActivity.this, Consultation_Activity.class);
-
-                // Pass the 'res' value to Const_Activity
-                intent.putExtra("result", res.getText().toString());
-
-                // Start the Const_Activity
-                startActivity(intent);
-
+                sbage.setProgress(0);
+                resultat();
             }
         });
+    }
+
+    public void init() {
+        age = findViewById(R.id.votreAge);
+        vm = findViewById(R.id.vm);
+        sbage = findViewById(R.id.sbAge);
+        res = findViewById(R.id.res);
+        rbGrp = findViewById(R.id.rbGrp);
+        rbnon=(RadioButton)findViewById(R.id.rbNon);
+        rboui=(RadioButton)findViewById(R.id.rbOui);
+        btn = findViewById(R.id.btn);
+    }
+
+    public void resultat() {
+        // Créer une intention pour démarrer l'activité Consultation_Activity
+        Intent intent = new Intent(MainActivity.this, Consultation_Activity.class);
+
+        // Transmettre la valeur de 'res' à Consultation_Activity
+        intent.putExtra("result", res.getText().toString());
+
+        // Démarrer l'activité Consultation_Activity
+        startActivity(intent);
     }
 }

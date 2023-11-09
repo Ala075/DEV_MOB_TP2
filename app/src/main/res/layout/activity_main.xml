@@ -64,7 +64,7 @@
         android:id="@+id/rbGrp">
 
         <RadioButton
-            android:id="@+id/rbtOui"
+            android:id="@+id/rbOui"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -72,7 +72,7 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
         <RadioButton
-            android:id="@+id/rbtNon"
+            android:id="@+id/rbNon"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
