@@ -20,7 +20,8 @@
         android:text="Mesure de niveau de glycémie"
         android:textColor="#fff"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
     <TextView
         android:id="@+id/votreAge"
         android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:max="120"
         android:id="@+id/sbAge"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         />
 
     <View
@@ -60,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/rbGrp">
 
         <RadioButton
@@ -89,29 +90,28 @@
         android:textSize="25sp"
         android:hint="Valeur mesurée (en mmol/l)"
         android:inputType="numberDecimal"
+        android:layout_marginTop="30dp"
         />
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:text="CONSULTER"
         android:textSize="18sp"
         android:padding="15dp"
         android:background="@drawable/button_shape"
         android:textColor="@color/white"
         />
-    <TextView
-        android:id="@+id/res"
+    <Button
+        android:id="@+id/dev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="..."
-        android:textStyle="bold"
-        android:textSize="23sp"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:textColor="@color/blue"
+        android:layout_marginTop="30dp"
+        android:text="Go Back"
+        android:textSize="18sp"
+        android:padding="15dp"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/white"
         />
-
-
 </LinearLayout>

@@ -1,9 +1,16 @@
 package com.example.devapp_1.views;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.devapp_1.Consultation_Activity;
+import com.example.devapp_1.HistoryActivity;
+import com.example.devapp_1.HomeActivity;
 import com.example.devapp_1.R;
 import com.example.devapp_1.controllers.Controller;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView age = null, res = null;
+    private TextView age = null;
+    String res;
     private SeekBar sbage = null;
     private RadioGroup rbGrp = null;
     private RadioButton rboui = null, rbnon = null;
@@ -26,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btn = null;
     private boolean isFasting;
 
-    private static Controller controller=new Controller();
+    private static Controller controller=Controller.getInstance();
+
 
 
     @Override
@@ -77,24 +88,38 @@ public class MainActivity extends AppCompatActivity {
                     ageValue = sbage.getProgress();
                     vmValue = Double.valueOf(vm.getText().toString());
 
-                    controller.createPatient(vmValue,ageValue,isFasting);
+                    controller.createPatient(vmValue, ageValue, isFasting);
 
-                    res.setText(controller.getResponse());
+                    res = controller.getResponse();
                 }
 
                 // Effacer les champs après le traitement
                 vm.setText("");
                 sbage.setProgress(0);
-                resultat();
+                if (validAge && validVm) {
+                    resultat();
+                }
             }
         });
+
+        Button dev = findViewById(R.id.dev);
+        dev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+    }
+    public void  goBack(){
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void init() {
         age = findViewById(R.id.votreAge);
         vm = findViewById(R.id.vm);
         sbage = findViewById(R.id.sbAge);
-        res = findViewById(R.id.res);
         rbGrp = findViewById(R.id.rbGrp);
         rbnon=(RadioButton)findViewById(R.id.rbNon);
         rboui=(RadioButton)findViewById(R.id.rbOui);
@@ -106,9 +131,24 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Consultation_Activity.class);
 
         // Transmettre la valeur de 'res' à Consultation_Activity
-        intent.putExtra("result", res.getText().toString());
+        intent.putExtra("result", res);
 
         // Démarrer l'activité Consultation_Activity
-        startActivity(intent);
+        activityResultLauncher.launch(intent);
     }
+
+    ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == RESULT_OK){
+                        Toast.makeText(getApplicationContext(), "OK, Consultation saved !", Toast.LENGTH_SHORT).show();
+                    } else if (result.getResultCode() == RESULT_CANCELED) {
+                        Toast.makeText(getApplicationContext(), "Failed, wrong result", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
+
 }

@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Define a style for the TableLayout -->
+    <style name="TableLayoutStyle">
+        <!-- Add your desired TableLayout styles here -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Add other attributes as needed -->
+    </style>
+
+    <!-- Define a style for the TableRows -->
+    <style name="TableRowStyle">
+        <!-- Add your desired TableRow styles here -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Add other attributes as needed -->
+    </style>
+
+    <!-- Define a style for the TextViews within the TableRows -->
+    <style name="TextViewStyle">
+        <!-- Add your desired TextView styles here -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Add other attributes as needed -->
+    </style>
+
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@drawable/app_background"
+android:padding="20dp"
+tools:context=".HomeActivity">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="HELLO DOCTOR"
+    android:textStyle="bold"
+    android:textColor="@color/white"
+    android:textSize="25sp"
+    android:padding="30dp"
+    />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:src="@drawable/doctor"
+    android:padding="20dp"
+    android:layout_marginTop="90dp"
+    />
+
+<TextView
+    android:id="@+id/dev"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="..."
+    android:textStyle="bold"
+    android:textColor="@color/black"
+    android:textSize="25sp"
+    android:padding="30dp"
+    android:layout_marginTop="15dp"
+    />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's go to work"
+            android:textSize="18sp"
+            android:padding="15dp"
+            android:background="@drawable/button_shape"
+            android:textColor="@color/white"
+            android:layout_marginRight="30dp"
+            />
+        <Button
+            android:id="@+id/hist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show History"
+            android:textSize="18sp"
+            android:padding="15dp"
+            android:background="@drawable/button_shape"
+            android:textColor="@color/white"
+            />
+
+    </GridLayout>
+
+
+
+</LinearLayout>

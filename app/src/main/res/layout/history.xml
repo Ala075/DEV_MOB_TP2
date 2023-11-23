@@ -7,48 +7,53 @@
     android:orientation="vertical"
     android:background="@drawable/app_background"
     android:padding="20dp"
-    tools:context=".Consultation_Activity">
+    tools:context=".HistoryActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Consultaion"
+        android:text="History"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:padding="30dp"
         />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/doctor"
-        android:padding="20dp"
-        android:layout_marginTop="90dp"
-        />
+
     <TextView
-        android:id="@+id/res"
+        android:id="@+id/dev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="..."
         android:textStyle="bold"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:padding="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         />
-    <Button
-        android:id="@+id/btn"
+    <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Go Back"
-        android:textSize="18sp"
-        android:padding="15dp"
-        android:background="@drawable/button_shape"
-        android:textColor="@color/white"
-        />
+        android:padding="20dp"
+        android:background="@color/blue">
+
+    </TableLayout>
+
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go Back"
+            android:textSize="18sp"
+            android:padding="15dp"
+            android:background="@drawable/button_shape"
+            android:textColor="@color/white"
+            android:layout_marginTop="30dp"
+            />
+
 
 
 
