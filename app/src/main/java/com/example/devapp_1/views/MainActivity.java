@@ -1,4 +1,4 @@
-package com.example.devapp_1;
+package com.example.devapp_1.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.devapp_1.Consultation_Activity;
+import com.example.devapp_1.R;
+import com.example.devapp_1.controllers.Controller;
+
 public class MainActivity extends AppCompatActivity {
     private TextView age = null, res = null;
     private SeekBar sbage = null;
@@ -20,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rboui = null, rbnon = null;
     private EditText vm = null;
     private Button btn = null;
-    private boolean jeuner;
+    private boolean isFasting;
+
+    private static Controller controller=new Controller();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,39 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     ageValue = sbage.getProgress();
                     vmValue = Double.valueOf(vm.getText().toString());
 
-                    if (rboui.isChecked()) {
-                        if (ageValue >= 13) {
-                            if (vmValue < 5.0) {
-                                res.setText("Niveau de glycémie est bas");
-                            } else if (vmValue >= 5.0 && vmValue <= 7.2) {
-                                res.setText("Niveau de glycémie est normal");
-                            } else {
-                                res.setText("Niveau de glycémie est trop élevé");
-                            }
-                        } else if (ageValue >= 6 && ageValue <= 12) {
-                            if (vmValue < 5.0) {
-                                res.setText("Niveau de glycémie est trop bas");
-                            } else if (vmValue >= 5.0 && vmValue <= 10.0) {
-                                res.setText("Niveau de glycémie est normal");
-                            } else {
-                                res.setText("Niveau de glycémie est trop élevé");
-                            }
-                        } else {
-                            if (vmValue < 5.5) {
-                                res.setText("Niveau de glycémie est trop bas");
-                            } else if (vmValue >= 5.5 && vmValue <= 10.0) {
-                                res.setText("Niveau de glycémie est normal");
-                            } else {
-                                res.setText("Niveau de glycémie est trop élevé");
-                            }
-                        }
-                    } else if (vmValue < 10.5) {
-                        res.setText("Niveau de glycémie est normal");
+                    controller.createPatient(vmValue,ageValue,isFasting);
 
-                    } else {
-                        res.setText("Niveau de glycémie est élevé");
-
-                    }
+                    res.setText(controller.getResponse());
                 }
 
                 // Effacer les champs après le traitement
