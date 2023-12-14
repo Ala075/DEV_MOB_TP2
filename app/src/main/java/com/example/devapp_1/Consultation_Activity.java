@@ -16,6 +16,8 @@ public class Consultation_Activity extends AppCompatActivity {
     SharedPreferences sp;
     private int id = 0;
 
+    String result = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +25,6 @@ public class Consultation_Activity extends AppCompatActivity {
 
         // Retrieve the data from the Intent
         Intent intent = getIntent();
-        String result = null;
         if (intent != null) {
             result = intent.getStringExtra("result");
 
@@ -50,8 +51,12 @@ public class Consultation_Activity extends AppCompatActivity {
     }
 
     public void goBack() {
-        Intent intent = new Intent(Consultation_Activity.this, MainActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent();
+        if(result != null){
+            setResult(RESULT_OK,intent);
+        }else {
+            setResult(RESULT_CANCELED,intent);
+        }
         finish();
     }
 }

@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText vm = null;
     private Button btn = null;
     private boolean isFasting;
+    private final int REQUEST_CODE=1;
 
     private static Controller controller=Controller.getInstance();
 
@@ -134,21 +136,33 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("result", res);
 
         // Démarrer l'activité Consultation_Activity
-        activityResultLauncher.launch(intent);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
-    ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK){
-                        Toast.makeText(getApplicationContext(), "OK, Consultation saved !", Toast.LENGTH_SHORT).show();
-                    } else if (result.getResultCode() == RESULT_CANCELED) {
-                        Toast.makeText(getApplicationContext(), "Failed, wrong result", Toast.LENGTH_SHORT).show();
-                    }
-                }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode==REQUEST_CODE) ) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(MainActivity.this, "OK, Consultation saved !", Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(MainActivity.this, "Failed, wrong result", Toast.LENGTH_LONG).show();
             }
-    );
+        }
+    }
+
+    //    ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(),
+//            new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    if(result.getResultCode() == RESULT_OK){
+//                        Toast.makeText(MainActivity.this, "OK, Consultation saved !", Toast.LENGTH_LONG).show();
+//                    } else if (result.getResultCode() == RESULT_CANCELED) {
+//                        Toast.makeText(MainActivity.this, "Failed, wrong result", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
+//    );
 
 }
