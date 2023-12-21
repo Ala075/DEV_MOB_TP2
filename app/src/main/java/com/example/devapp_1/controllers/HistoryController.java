@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
-import com.example.devapp_1.helpers.SQLiteHelper;
+import com.example.devapp_1.helpers.SqLiteHelper;
 
 public class HistoryController {
     private static HistoryController instance;
@@ -20,12 +20,12 @@ public class HistoryController {
     private static final String COL_CONSULT = "CONSULTATION";
     private static final int NUM_COL_CONULT = 2;
     private SQLiteDatabase bd;
-    private SQLiteHelper histories;
+    private SqLiteHelper histories;
     private History history;
 
     // Private constructor to enforce Singleton pattern
     private HistoryController(Context context) {
-        histories = new SQLiteHelper(context, NOM_BDD, null, VERSION);
+        histories = new SqLiteHelper(context, NOM_BDD, null, VERSION);
     }
 
     // Method to get the singleton instance
