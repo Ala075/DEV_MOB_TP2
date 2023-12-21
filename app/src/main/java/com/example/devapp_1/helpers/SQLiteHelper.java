@@ -2,7 +2,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+public class SqLiteHelper extends SQLiteOpenHelper {
   private static final String TABLE_NAME = "table_histories";
   public static final String COL_ID = "ID";
   public static final String COL_NAME = "USERNAME";
@@ -12,7 +12,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 + COL_NAME + " TEXT NOT NULL, "
 + COL_CONSULT + " TEXT NOT NULL);";
 
-  public SQLiteHelper(Context context) {
+  public SqLiteHelper(Context context) {
     super(context, "mydatabase.db", null, 1);
   }
 
