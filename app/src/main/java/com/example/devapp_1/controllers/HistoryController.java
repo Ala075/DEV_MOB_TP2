@@ -110,7 +110,7 @@ public class HistoryController {
             history.setId(c.getInt(NUM_COL_ID));
             history.setUsername(c.getString(NUM_COL_NAME));
             history.setConsultation(c.getString(NUM_COL_CONSULT));
-            historyList.add(chapter);
+            historyList.add(history);
         }
         c.close();
         return historyList;
