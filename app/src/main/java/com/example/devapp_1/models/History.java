@@ -16,7 +16,7 @@ public class History {
   public void setId (int id) { this.id = id; }
 
   public String getUserame() { return username; }
-  public void setUserame (String name) { this.username = username; }
+  public void setUsername (String name) { this.username = username; }
   
   public String getConsultation () { 
     return consultation; 
