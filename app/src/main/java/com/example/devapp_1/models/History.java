@@ -5,9 +5,9 @@ public class History {
   private String username;
   private String consultation;
 
-  public Chapitre() {}
+  public History() {}
 
-  public Chapitre (String username, String consult){
+  public History (String username, String consult){
     this.username = username;
     this.consultation = consult; 
   }
