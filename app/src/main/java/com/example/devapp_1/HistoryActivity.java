@@ -3,6 +3,7 @@ package com.example.devapp_1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.devapp_1.controllers.HistoryController;
+import com.example.devapp_1.models.History;
 
 import android.content.Intent;
 import android.os.Bundle;
