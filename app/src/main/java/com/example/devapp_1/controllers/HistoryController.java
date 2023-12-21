@@ -31,7 +31,7 @@ public class HistoryController {
     // Method to get the singleton instance
     public static HistoryController getInstance(Context context) {
         if (instance == null) {
-            instance = new HistoryController(context.getApplicationContext());
+            instance = new HistoryController(context);
         }
         return instance;
     } 
