@@ -53,17 +53,20 @@ public class HistoryController {
     }
 
     public long addHistory(String username,String consult) {
+        openForWrite();
         history = new History(username,consult);
       
         ContentValues content = new ContentValues();
         content.put(COL_NAME, history.getUserame());
         content.put(COL_CONSULT, history.getConsultation());
-        return bd.insert(TABLE_NAME, null, content);
+        long result = bd.insert(TABLE_NAME, null, content);
+        close();
+        return result;
     }
 
     // public int updateHistory(int id, History history) {
 //        ContentValues content = new ContentValues();
-//        content.put(COL_NAME, history.getName());
+//        content.put(COL_NAME, history.getNae());
 //        content.put(COL_CONSULT, history.getConsultation());
 //        return bd.update(TABLE_NAME, content, COL_ID + " = " + id, null);
 //     }
@@ -79,8 +82,10 @@ public class HistoryController {
 //     }
 
     public ArrayList<History> getAllHistories() {
+        openForRead();
         Cursor c = bd.query(TABLE_NAME, new String[]{COL_ID, COL_NAME, COL_CONSULT},
                 null, null, null, null, COL_NAME);
+        close();
         return cursorToHistoryList(c);
     }
 
