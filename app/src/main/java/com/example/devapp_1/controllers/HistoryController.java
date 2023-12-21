@@ -111,7 +111,7 @@ public class HistoryController {
         }
         ArrayList<History> historyList = new ArrayList<>();
         while (c.moveToNext()) {
-            history history = new History();
+            History history = new History();
             history.setId(c.getInt(NUM_COL_ID));
             history.setUsername(c.getString(NUM_COL_NAME));
             history.setConsultation(c.getString(NUM_COL_CONSULT));
