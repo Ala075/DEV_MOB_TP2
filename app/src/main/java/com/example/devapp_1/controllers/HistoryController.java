@@ -56,7 +56,7 @@ public class HistoryController {
         history = new History(username,consult);
       
         ContentValues content = new ContentValues();
-        content.put(COL_NAME, history.getName());
+        content.put(COL_NAME, history.getUserame());
         content.put(COL_CONSULT, history.getConsultation());
         return bd.insert(TABLE_NAME, null, content);
     }
