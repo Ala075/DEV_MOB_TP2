@@ -7,8 +7,8 @@ public class History {
 
   public Chapitre() {}
 
-  public Chapitre (String name, String consult){
-    this.username = name;
+  public Chapitre (String username, String consult){
+    this.username = username;
     this.consultation = consult; 
   }
 
