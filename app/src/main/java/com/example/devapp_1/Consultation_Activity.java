@@ -3,20 +3,16 @@ package com.example.devapp_1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.devapp_1.views.MainActivity;
+import com.example.devapp_1.controllers.HistoryController;
 
 public class Consultation_Activity extends AppCompatActivity {
 
-    SharedPreferences sp;
-    private int id = 0;
-
-    String result = null;
+    private String result = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +28,10 @@ public class Consultation_Activity extends AppCompatActivity {
             // For example, you can display it in a TextView
             TextView resultTextView = findViewById(R.id.res);
             resultTextView.setText(result);
-        }
 
-        sp = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        int nextId = sp.getInt("id", 0) + 1;
-        editor.putInt("id", nextId);
-        editor.putString("result" + nextId, result);
-        editor.apply();
+            // Add the result to the SQLite database
+            addHistoryToDatabase(result);
+        }
 
         Button btn = findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -50,12 +42,41 @@ public class Consultation_Activity extends AppCompatActivity {
         });
     }
 
+    private void addHistoryToDatabase(String result) {
+      // Initialize the controller
+      HistoryController controller = HistoryController.getInstance(this);
+      controller.openForWrite();
+
+      // Get the next available id from SharedPreferences
+      int nextId = getAndIncrementNextId();
+
+      // Add the result to the database with a dynamic username
+      controller.addHistory("user" + nextId, result);
+
+      // Close the database
+      controller.close();
+    }
+
+    private int getAndIncrementNextId() {
+      // Retrieve the next available id from SharedPreferences
+      SharedPreferences sp = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+      int nextId = sp.getInt("id", 0);
+
+      // Increment and save the next id
+      SharedPreferences.Editor editor = sp.edit();
+      editor.putInt("id", nextId + 1);
+      editor.apply();
+
+      return nextId;
+    }
+
+
     public void goBack() {
         Intent intent = new Intent();
-        if(result != null){
-            setResult(RESULT_OK,intent);
-        }else {
-            setResult(RESULT_CANCELED,intent);
+        if (result != null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED, intent);
         }
         finish();
     }
