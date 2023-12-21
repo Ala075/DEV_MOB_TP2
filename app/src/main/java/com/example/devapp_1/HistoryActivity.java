@@ -26,11 +26,13 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Initialize the controller
         controller = HistoryController.getInstance(this);
+        controller.openForRead();
 
         // Access the TableLayout defined in your XML and apply the style
         TableLayout tableLayout = findViewById(R.id.tableLayout);
 
         ArrayList<History> historyList = controller.getAllHistories();
+        
 
         for (int i = 0; i < historyList.size(); i++) {
           History history = historyList.get(i);
@@ -90,5 +92,11 @@ public class HistoryActivity extends AppCompatActivity {
         Intent intent = new Intent(HistoryActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+    
+    @Override
+    protected void onDestroy() {
+      super.onDestroy();
+      HistoryController.getInstance(this).close();
     }
 }
