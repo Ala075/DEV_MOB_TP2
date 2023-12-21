@@ -2,8 +2,9 @@ package com.example.devapp_1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.devapp_1.controllers.HistoryController;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -15,30 +16,28 @@ import android.widget.TextView;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    SharedPreferences sp;
+    private HistoryController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
 
-        // Move SharedPreferences initialization here
-        sp = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-
-        // Get the total number of consultations
-        int totalConsultations = sp.getInt("id", 0);
+        // Initialize the controller
+        controller = HistoryController.getInstance(this);
 
         // Access the TableLayout defined in your XML and apply the style
         TableLayout tableLayout = findViewById(R.id.tableLayout);
 
-        for (int i = 1; i <= totalConsultations; i++) {
-            // Create a new row and apply the style
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT)
+        ArrayList<History> historyList = controller.getAllHistories();
 
-            );
+        for (int i = 0; i < historyList.size(); i++) {
+          History history = historyList.get(i);
+
+    
+          // Create a new row and apply the style
+          TableRow row = new TableRow(this);
+          row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
             row.setPadding(0,0,0,20);
 
             // Create a TextView for ID and apply the style
@@ -51,20 +50,27 @@ public class HistoryActivity extends AppCompatActivity {
             idTextView.setPadding(0,0,50,0);
             idTextView.setTextSize(20);
             //idTextView.setTextAppearance(this, R.style.TextViewStyle);
+            
+            // Create a TextView for Username and apply the style
+    TextView usernameTextView = new TextView(this);
+    usernameTextView.setText(history.getUsername());
+    usernameTextView.setLayoutParams(new TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT));
+    usernameTextView.setGravity(Gravity.CENTER);
 
-            // Create a TextView for Result and apply the style
-            TextView resultTextView = new TextView(this);
-            String result = sp.getString("result" + i, "");
-            resultTextView.setText(result);
-            resultTextView.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            resultTextView.setGravity(Gravity.CENTER);
-            //resultTextView.setTextAppearance(this, R.style.TextViewStyle);
+    // Create a TextView for Consultation and apply the style
+    TextView consultationTextView = new TextView(this);
+    consultationTextView.setText(history.getConsultation());
+    consultationTextView.setLayoutParams(new TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT));
+    consultationTextView.setGravity(Gravity.CENTER);
 
             // Add the TextViews to the row
             row.addView(idTextView);
-            row.addView(resultTextView);
+            row.addView(usernameTextView);
+            row.addView(consultationTextView);
 
             // Add the row to the TableLayout
             tableLayout.addView(row);
