@@ -12,7 +12,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 + COL_NAME + " TEXT NOT NULL, "
 + COL_CONSULT + " TEXT NOT NULL);";
 
-  public ChapitreBaseSQLite(Context context) {
+  public SQLiteHelper(Context context) {
     super(context, "mydatabase.db", null, 1);
   }
 
