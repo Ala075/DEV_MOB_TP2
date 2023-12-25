@@ -9,17 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.devapp_1.Consultation_Activity;
 import com.example.devapp_1.HistoryActivity;
@@ -29,10 +24,11 @@ import com.example.devapp_1.controllers.LoginController;
 
 public class LoginActivity extends AppCompatActivity {
     
-    private EditText vm = null;
+    private EditText email = null;
+    private EditText password = null;
+    private Button btn = null;
     
-
-    private static LoginController loginController=LoginController.getInstance();
+    LoginController loginController;
 
 
 
@@ -43,26 +39,45 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
 
-        
+        String emailValue = loginController.getEmail();
+        String passwordValue = loginController.getPassword(); 
+      
+
+        email.setText(emailValue);
+        password.setText(passwordValue);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              
-              
-              LoginController.createPatient(vmValue, ageValue, isFasting);
-              res = LoginController.getResponse();
-              if (validAge && validVm) {
+              boolean validEmail = false;
+              boolean validPassword=false;
+
+                if (!email.getText().toString().isEmpty()&&emailValue.equals(email.getText().toString())){
+                    validEmail=true;
+                }else {
+                    Toast.makeText(LoginActivity.this,"verifier votre email",Toast.LENGTH_SHORT).show();
+                }
+                if (!password.getText().toString().isEmpty()&&passwordValue.equals(password.getText().toString())){
+                    validPassword=true;
+                }else {
+                    Toast.makeText(LoginActivity.this,"verifier votre password",Toast.LENGTH_LONG).show();
+                }
+              if (validEmail && validPassword) {
                   resultat();
               }
             }
         });
+        
+                
 
     } 
 
     public void init() {
-        rboui=(RadioButton)findViewById(R.id.rbOui);
+      
+        email=findViewById(R.id.email);
+        password=findViewById(R.id.password);
         btn = findViewById(R.id.btn);
+        loginController=LoginController.getInstance(this);
     }
 
     public void resultat() {
