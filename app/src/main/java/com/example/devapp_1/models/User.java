@@ -2,11 +2,11 @@ package com.example.devapp_1.models;
 
 public class User {
 
-    private String Username ;
+    private String Email ;
     private String password;
 
-    public User(String username, String password) {
-        this.Email = username;
+    public User(String email, String password) {
+        this.Email = email;
         this.password = password;
     }
 
@@ -15,7 +15,7 @@ public class User {
     }
 
     public  String getPassword() {
-        return password;
+        return password; 
     }
 
 
