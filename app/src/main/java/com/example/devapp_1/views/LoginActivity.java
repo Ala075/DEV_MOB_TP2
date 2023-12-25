@@ -48,40 +48,26 @@ public class LoginActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              LoginController.createPatient(vmValue, ageValue, isFasting);res = LoginController.getResponse();
-                if (validAge && validVm) {
-                    resultat();
-                }
+              
+              
+              LoginController.createPatient(vmValue, ageValue, isFasting);
+              res = LoginController.getResponse();
+              if (validAge && validVm) {
+                  resultat();
+              }
             }
         });
 
-        Button dev = findViewById(R.id.dev);
-        dev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-    }
-    public void  goBack(){
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
+    } 
 
     public void init() {
-        age = findViewById(R.id.votreAge);
-        vm = findViewById(R.id.vm);
-        sbage = findViewById(R.id.sbAge);
-        rbGrp = findViewById(R.id.rbGrp);
-        rbnon=(RadioButton)findViewById(R.id.rbNon);
         rboui=(RadioButton)findViewById(R.id.rbOui);
         btn = findViewById(R.id.btn);
     }
 
     public void resultat() {
         // Créer une intention 
-        Intent intent = new Intent(LoginActivity.this, Consultation_Activity.class);
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 
