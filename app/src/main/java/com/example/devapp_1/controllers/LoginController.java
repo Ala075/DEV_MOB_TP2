@@ -24,7 +24,7 @@ public class LoginController {
     private static void recapUser (Context context) {Retrofit retrofit = ApiClient.getApiClient();
       ApiService apiService = retrofit.create(ApiService.class);
 
-      Call<String> call = apiService.getHelloWorld();
+      Call<String> call = apiService.getUser();
       call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
